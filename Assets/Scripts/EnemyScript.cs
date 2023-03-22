@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
+using Aoiti.Pathfinding;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,16 @@ public class EnemyScript : MonoBehaviour
     private Transform canvas;
     private Slider healthBar;
     private float health;
+    
+    [SerializeField] float gridSize = 10.0f; //increase patience or gridSize for larger maps
+    [SerializeField] float speed = 1.0f; //increase for faster movement
+    Pathfinder<Vector2> pathfinder;
+     //the pathfinder object that stores the methods and patience
+     
+     [SerializeField] LayerMask obstacles;
+     List<Vector2> pathLeftToGo= new List<Vector2>();
+     List <Vector2> path;
+     [SerializeField] bool searchShortcut = false; 
 
     private void OnEnable()
     {
@@ -25,12 +36,52 @@ public class EnemyScript : MonoBehaviour
         health = MaxHealth;
         healthBar.maxValue = MaxHealth;
         healthBar.value = health;
+        
+        pathfinder = new Pathfinder<Vector2>(GetDistance,GetNeighbourNodes,1000); //increase patience or gridSize for larger maps
+
+        var finishLine = GameObject.Find("GroundFinishLine");
+        var startLine = GameObject.Find("GroundStart");
+        
+        if (startLine != null)
+        {
+            transform.position = startLine.transform.position;
+        }
+        
+        if (finishLine != null)
+        {
+            GetMoveCommand(finishLine.transform.position);
+        }
+        
     }
 
     private void Update()
     {
-        canvas.rotation = Quaternion.identity;
+        //canvas.rotation = Quaternion.identity;
         canvas.localScale = Vector3.one * 0.5f;
+        
+
+        if (pathLeftToGo.Count > 0) //if the target is not yet reached
+        {
+            Vector3 dir =  (Vector3)pathLeftToGo[0]-transform.position ;
+            transform.position += dir.normalized * speed;
+            if (((Vector2)transform.position - pathLeftToGo[0]).sqrMagnitude <speed*speed) 
+            {
+                transform.position = pathLeftToGo[0];
+                pathLeftToGo.RemoveAt(0);
+            }
+        }
+        
+    }
+    
+    void GetMoveCommand(Vector2 target)
+    {
+        Vector2 closestNode = GetClosestNode(transform.position);
+        if (pathfinder.GenerateAstarPath(closestNode, GetClosestNode(target), out path)) //Generate path between two points on grid that are close to the transform position and the assigned target.
+        {
+            pathLeftToGo = new List<Vector2>(path);
+            pathLeftToGo.Add(target);
+        }
+        
     }
 
     private void SpawnCoins()
@@ -93,5 +144,51 @@ public class EnemyScript : MonoBehaviour
             EnemyManagerScript.Instance.DeleteEnemy(gameObject);
             Pool.Instance.DeactivateObject(gameObject);
         }
+    }
+    
+    /// <summary>
+    /// A distance approximation. 
+    /// </summary>
+    /// <param name="A"></param>
+    /// <param name="B"></param>
+    /// <returns></returns>
+    float GetDistance(Vector2 A, Vector2 B) 
+    {
+        return (A - B).sqrMagnitude; //Uses square magnitude to lessen the CPU time.
+    }
+
+    /// <summary>
+    /// Finds possible conenctions and the distances to those connections on the grid.
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <returns></returns>
+    Dictionary<Vector2,float> GetNeighbourNodes(Vector2 pos) 
+    {
+        Dictionary<Vector2, float> neighbours = new Dictionary<Vector2, float>();
+        for (int i=-1;i<2;i++)
+        {
+            for (int j=-1;j<2;j++)
+            {
+                if (i == 0 && j == 0) continue;
+
+                Vector2 dir = new Vector2(i, j)*gridSize;
+                if (!Physics2D.Linecast(pos,pos+dir, obstacles))
+                {
+                    neighbours.Add(GetClosestNode( pos + dir), dir.magnitude);
+                }
+            }
+
+        }
+        return neighbours;
+    }
+    
+    /// <summary>
+    /// Finds closest point on the grid
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    Vector2 GetClosestNode(Vector2 target) 
+    {
+        return new Vector2(Mathf.Round(target.x/gridSize)*gridSize, Mathf.Round(target.y / gridSize) * gridSize);
     }
 }
