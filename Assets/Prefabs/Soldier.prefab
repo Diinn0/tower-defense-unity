@@ -147,7 +147,7 @@ MonoBehaviour:
   SpawnedCoinMean: 0
   SpawnedCoinStd: 0.4
   gridSize: 10
-  speed: 1
+  speed: 0.25
   obstacles:
     serializedVersion: 2
     m_Bits: 64
