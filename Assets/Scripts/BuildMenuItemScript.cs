@@ -17,6 +17,8 @@ public class BuildMenuItemScript : MonoBehaviour, IPointerDownHandler, IPointerE
     private Image image;
     private bool pressed = false;
     private bool disabled = false;
+    
+    public static EnemyScript fakeSoldier = null;
 
     void Update()
     {
@@ -76,6 +78,15 @@ public class BuildMenuItemScript : MonoBehaviour, IPointerDownHandler, IPointerE
        
         var instance = Instantiate(Prototype, parent.transform.position, Quaternion.identity);
         GameManager.Instance.TurretBuilt(instance);
+        
+        if (!fakeSoldier.UpdatePathfinding())
+        {
+            Destroy(instance);
+        }
+        else
+        {
+            // Turret is allowed to be created
+        }
 
         rangeSprite.SetActive(false);
         parent.SetActive(false);
@@ -90,5 +101,10 @@ public class BuildMenuItemScript : MonoBehaviour, IPointerDownHandler, IPointerE
         price = transform.Find("Price").gameObject.GetComponent<Text>();
         rangeSprite = parent.transform.Find("Range").gameObject;
         range = Prototype.transform.Find("Cannon").GetComponent<CannonScript>().Range;
+        
+        if (fakeSoldier == null)
+        {
+            fakeSoldier = GameObject.Find("FakeSoldier").GetComponent<EnemyScript>();
+        }
     }
 }
