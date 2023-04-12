@@ -1,4 +1,4 @@
-﻿using Assets.Scripts;
+using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using Aoiti.Pathfinding;
@@ -47,12 +47,18 @@ public class EnemyScript : MonoBehaviour
         {
             transform.position = startLine.transform.position;
         }
-        
+
+        updatePathFinder();
+
+    }
+
+    public void updatePathFinder()
+    {
+        var finishLine = GameObject.Find("GroundFinishLine");
         if (finishLine != null)
         {
             GetMoveCommand(finishLine.transform.position);
         }
-        
     }
 
     private void Update()
@@ -66,7 +72,6 @@ public class EnemyScript : MonoBehaviour
         //canvas.rotation = Quaternion.identity;
         canvas.localScale = Vector3.one * 0.5f;
         
-
         if (pathLeftToGo.Count > 0) //if the target is not yet reached
         {
             Vector3 dir =  (Vector3)pathLeftToGo[0]-transform.position ;
