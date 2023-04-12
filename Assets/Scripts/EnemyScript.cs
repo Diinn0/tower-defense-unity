@@ -25,7 +25,8 @@ public class EnemyScript : MonoBehaviour
      [SerializeField] LayerMask obstacles;
      List<Vector2> pathLeftToGo= new List<Vector2>();
      List <Vector2> path;
-     [SerializeField] bool searchShortcut = false; 
+     [SerializeField] bool searchShortcut = false;
+     private GameObject finishLine = null;
 
     private void OnEnable()
     {
@@ -39,7 +40,7 @@ public class EnemyScript : MonoBehaviour
         
         pathfinder = new Pathfinder<Vector2>(GetDistance,GetNeighbourNodes,1000); //increase patience or gridSize for larger maps
 
-        var finishLine = GameObject.Find("GroundFinishLine");
+        finishLine = GameObject.Find("GroundFinishLine");
         var startLine = GameObject.Find("GroundStart");
         
         if (startLine != null)
@@ -56,6 +57,12 @@ public class EnemyScript : MonoBehaviour
 
     private void Update()
     {
+
+        if (gameObject.name == "FakeSoldier")
+        {
+            return;
+        }
+        
         //canvas.rotation = Quaternion.identity;
         canvas.localScale = Vector3.one * 0.5f;
         
@@ -73,15 +80,21 @@ public class EnemyScript : MonoBehaviour
         
     }
     
-    void GetMoveCommand(Vector2 target)
+    bool GetMoveCommand(Vector2 target)
     {
         Vector2 closestNode = GetClosestNode(transform.position);
-        if (pathfinder.GenerateAstarPath(closestNode, GetClosestNode(target), out path)) //Generate path between two points on grid that are close to the transform position and the assigned target.
+        var result = pathfinder.GenerateAstarPath(closestNode, GetClosestNode(target), out path);
+        if (result) //Generate path between two points on grid that are close to the transform position and the assigned target.
         {
             pathLeftToGo = new List<Vector2>(path);
             pathLeftToGo.Add(target);
         }
-        
+        else
+        {
+            // Pathfinding is not possible
+        }
+
+        return result;
     }
 
     private void SpawnCoins()
@@ -191,4 +204,9 @@ public class EnemyScript : MonoBehaviour
     {
         return new Vector2(Mathf.Round(target.x/gridSize)*gridSize, Mathf.Round(target.y / gridSize) * gridSize);
     }
+
+    public bool UpdatePathfinding()
+    {
+        return GetMoveCommand(finishLine.transform.position);
+    } 
 }
