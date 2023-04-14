@@ -819,11 +819,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1377596984729126}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5fb3422528a5452d9ba0653756bef15, type: 3}
+  m_Script: {fileID: 11500000, guid: bc8d94d90669b9644b2ffa5291fdd45a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _highlight: {fileID: 3144816810534364558, guid: 8630fc2355bdc47c48ff0cde96bce972,
-    type: 3}
+  _highlight: {fileID: 0}
 --- !u!114 &114787254209057222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -836,7 +835,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2bb331906411cc42947e196d9c8d473, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fakeSoldier: {fileID: 0}
 --- !u!1 &1415222086878076
 GameObject:
   m_ObjectHideFlags: 0

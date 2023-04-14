@@ -88,6 +88,7 @@ public class BuildMenuItemScript : MonoBehaviour, IPointerDownHandler, IPointerE
             // Turret is allowed to be created
         }
 
+        GameManager.Instance.UpdatePathFinder();
         rangeSprite.SetActive(false);
         parent.SetActive(false);
     }

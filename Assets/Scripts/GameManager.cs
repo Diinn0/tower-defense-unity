@@ -69,6 +69,8 @@ public class GameManager : MonoBehaviour
 
         remainingEnemies--;
         if(remainingEnemies == 0) Victory();
+        
+        Destroy(enemy);
     }
 
     public void EnemyKilled(GameObject enemy)
@@ -137,11 +139,12 @@ public class GameManager : MonoBehaviour
 
     public void NextLevel()
     {
-        if (Level <= 2)
+        //Disable other levels
+        /*if (Level <= 2)
         {
             SceneManager.LoadScene("Level_0" + (Level + 1));
         }
-        else
+        else*/
         {
             SceneManager.LoadScene("Menu_screen");
         }
@@ -150,5 +153,25 @@ public class GameManager : MonoBehaviour
     public void BackToMainMenu()
     {
         SceneManager.LoadScene("Menu_screen");
+    }
+
+    public void UpdatePathFinder()
+    {
+        GameObject[] gameObjects;
+        gameObjects = GameObject.FindGameObjectsWithTag("soldier");
+
+        foreach (var gameObject in gameObjects)
+        {
+            EnemyScript script = gameObject.GetComponent<EnemyScript>();
+            script.updatePathFinder();
+        }
+        
+        gameObjects = GameObject.FindGameObjectsWithTag("tank");
+
+        foreach (var gameObject in gameObjects)
+        {
+            EnemyScript script = gameObject.GetComponent<EnemyScript>();
+            script.updatePathFinder();
+        }
     }
 }

@@ -87,7 +87,6 @@ GameObject:
   - component: {fileID: 4225220496185362}
   - component: {fileID: 212590656160589168}
   - component: {fileID: 61096227350020228}
-  - component: {fileID: 114661671904458110}
   - component: {fileID: 114254906361930568}
   - component: {fileID: 50719512898717024}
   m_Layer: 8
@@ -192,21 +191,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 52, y: 36}
   m_EdgeRadius: 0
---- !u!114 &114661671904458110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1233710361444010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd77565f06213f3419b318f0fd9ed2ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Type: 0
-  Speed: 50
-  OffsetAmount: 0
 --- !u!114 &114254906361930568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,8 +208,8 @@ MonoBehaviour:
   Coin: {fileID: 1217316932939368, guid: 570d8db676ef6304ebdb3a76c5e8d74c, type: 3}
   SpawnedCoinMean: 2
   SpawnedCoinStd: 4
-  gridSize: 0.5
-  speed: 0.05
+  gridSize: 10
+  speed: 0.15
   obstacles:
     serializedVersion: 2
     m_Bits: 64

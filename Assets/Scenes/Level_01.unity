@@ -2906,14 +2906,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25eacce8884fe6b46ba842d0d63a4c62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialMoney: 10000
+  InitialMoney: 20
   Level: 1
   VictoryText: {fileID: 627862669}
   GameOverText: {fileID: 243347971}
   InitialTurretPrice: 20
-  InitialRocketPrice: 600
+  InitialRocketPrice: 200
   TurretPriceAddition: 50
-  RocketPriceAddition: 300
+  RocketPriceAddition: 150
 --- !u!4 &1087949917
 Transform:
   m_ObjectHideFlags: 0
@@ -3000,6 +3000,10 @@ MonoBehaviour:
   - Amount: 10
     Enemy: {fileID: 1141339285231944, guid: 2b4be0333c134ad478dfc8f4bd8c7f23, type: 3}
     SpawnTime: 1.5
+    RestTime: 0
+  - Amount: 5
+    Enemy: {fileID: 1478546801253832, guid: c10f8ee6335fe554e85979fe4b225ae5, type: 3}
+    SpawnTime: 1
     RestTime: 5
   - Amount: 20
     Enemy: {fileID: 1141339285231944, guid: 2b4be0333c134ad478dfc8f4bd8c7f23, type: 3}
@@ -3009,7 +3013,7 @@ MonoBehaviour:
     Enemy: {fileID: 1141339285231944, guid: 2b4be0333c134ad478dfc8f4bd8c7f23, type: 3}
     SpawnTime: 0.4
     RestTime: 5
-  - Amount: 1
+  - Amount: 5
     Enemy: {fileID: 1233710361444010, guid: a9f617fb7fe1e9742b1b293a2adbeed6, type: 3}
     SpawnTime: 1
     RestTime: 5
@@ -3144,7 +3148,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1087949915}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 301be04fe73fb45c8be6485045e29886, type: 3}
+  m_Script: {fileID: 11500000, guid: b6bda209031a99f4eac07a7a64e53331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _width: 20
