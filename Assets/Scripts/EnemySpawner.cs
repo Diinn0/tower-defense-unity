@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -18,14 +20,20 @@ public class EnemySpawner : MonoBehaviour
     private Wave currentWave;
     private float spawnTime = 2.0f;
 
-	// Use this for initialization
+    private float RestTime = 0.1f;
+    private Boolean rest = false;
+    private float mobCount = 0;
+
+    private Random rand = new Random();
+
+    // Use this for initialization
 	void OnEnable ()
     {
         currentWave = Waves[0];
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	/*void Update ()
     {
         if (waveIndex >= Waves.Count) return;
 
@@ -54,11 +62,65 @@ public class EnemySpawner : MonoBehaviour
         }
 
         spawnTime -= Time.deltaTime;        
-	}
+	}*/
 
-    private void Spawn(GameObject prototype)
+    private void Update()
     {
-        var spawnedEnemy = Pool.Instance.ActivateObject(prototype.tag);
+        if (!rest)
+        {
+            if (mobCount > 0)
+            {
+                if (spawnTime < 0)
+                {
+                    Spawn("soldier");
+
+                    if (waveIndex > 5)
+                    {
+                        if (rand.Next(0, 100) >= 60 - waveIndex)
+                        {
+                            if (rand.Next(0, 1) == 1)
+                            {
+                                Spawn("tank");
+                            }
+                            else
+                            {
+                                Spawn("plane");
+                            }
+                        }
+                    }
+                    
+                    spawnTime = Math.Max(0.1f, 1.5f - waveIndex * 0.1f);
+                    mobCount--;
+                }
+                
+                spawnTime -= Time.deltaTime;
+                return;
+            }
+            else
+            {
+                waveIndex++;
+                rest = true;
+                return;
+            }
+        }
+
+        if (rest && RestTime > 0)
+        {
+            RestTime -= Time.deltaTime;
+            return;
+        }
+
+        if (RestTime <= 0)
+        {
+            mobCount = waveIndex * 2;
+            RestTime = 5;
+            rest = false;
+        }
+    }
+
+    private void Spawn(String tag)
+    {
+        var spawnedEnemy = Pool.Instance.ActivateObject(tag);
         spawnedEnemy.SetActive(true);
 
         EnemyManagerScript.Instance.RegisterEnemy(spawnedEnemy);

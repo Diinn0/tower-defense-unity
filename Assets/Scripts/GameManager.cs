@@ -67,8 +67,8 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
 
-        remainingEnemies--;
-        if(remainingEnemies == 0) Victory();
+        /*remainingEnemies--;
+        if(remainingEnemies == 0) Victory();*/
         
         Destroy(enemy);
     }

@@ -2989,27 +2989,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Waves:
-  - Amount: 1
+  - Amount: 5
     Enemy: {fileID: 1141339285231944, guid: 2b4be0333c134ad478dfc8f4bd8c7f23, type: 3}
     SpawnTime: 1
     RestTime: 5
-  - Amount: 5
+  - Amount: 10
     Enemy: {fileID: 1141339285231944, guid: 2b4be0333c134ad478dfc8f4bd8c7f23, type: 3}
     SpawnTime: 3
     RestTime: 5
-  - Amount: 10
+  - Amount: 20
     Enemy: {fileID: 1141339285231944, guid: 2b4be0333c134ad478dfc8f4bd8c7f23, type: 3}
     SpawnTime: 1.5
     RestTime: 0
+  - Amount: 50
+    Enemy: {fileID: 1141339285231944, guid: 2b4be0333c134ad478dfc8f4bd8c7f23, type: 3}
+    SpawnTime: 0.75
+    RestTime: 5
   - Amount: 5
     Enemy: {fileID: 1478546801253832, guid: c10f8ee6335fe554e85979fe4b225ae5, type: 3}
     SpawnTime: 1
     RestTime: 5
-  - Amount: 20
-    Enemy: {fileID: 1141339285231944, guid: 2b4be0333c134ad478dfc8f4bd8c7f23, type: 3}
-    SpawnTime: 0.75
-    RestTime: 5
-  - Amount: 50
+  - Amount: 150
     Enemy: {fileID: 1141339285231944, guid: 2b4be0333c134ad478dfc8f4bd8c7f23, type: 3}
     SpawnTime: 0.4
     RestTime: 5

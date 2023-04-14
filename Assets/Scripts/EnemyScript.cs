@@ -148,7 +148,7 @@ public class EnemyScript : MonoBehaviour
                 }
 
                 SpawnCoins();
-                GameManager.Instance.EnemyKilled(gameObject);
+                //GameManager.Instance.EnemyKilled(gameObject);
                 Pool.Instance.DeactivateObject(gameObject);
                 EnemyManagerScript.Instance.DeleteEnemy(gameObject);
             }
